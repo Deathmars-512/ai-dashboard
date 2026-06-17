@@ -144,6 +144,9 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
 </head>
 <body>
 
+<!-- WebGL Shader Background -->
+<canvas id="bg-shader" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none"></canvas>
+
 <!-- Ambient glow orbs -->
 <div style="position:fixed;bottom:0;right:0;width:384px;height:384px;border-radius:50%;background:rgba(0,242,255,0.04);filter:blur(120px);pointer-events:none;z-index:0"></div>
 <div style="position:fixed;top:80px;left:300px;width:256px;height:256px;border-radius:50%;background:rgba(139,43,226,0.04);filter:blur(100px);pointer-events:none;z-index:0"></div>
@@ -247,6 +250,108 @@ function toggleSummary(btn) {
   var collapsed = s.classList.toggle('clamp');
   btn.textContent = collapsed ? 'EXPAND ↓' : 'COLLAPSE ↑';
 }
+</script>
+
+<script>
+// ── WebGL Atmospheric Shader Background ──────────────────
+(function() {
+  var canvas = document.getElementById('bg-shader');
+  var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+
+  var VS = [
+    'attribute vec2 a_pos;',
+    'void main(){gl_Position=vec4(a_pos,0.0,1.0);}'
+  ].join('\n');
+
+  var FS = [
+    'precision mediump float;',
+    'uniform float u_time;',
+    'uniform vec2 u_res;',
+
+    'vec2 hash2(vec2 p){',
+    '  p=vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3)));',
+    '  return fract(sin(p)*43758.5453)*2.0-1.0;',
+    '}',
+
+    'float noise(vec2 p){',
+    '  vec2 i=floor(p),f=fract(p);',
+    '  vec2 u=f*f*(3.0-2.0*f);',
+    '  return mix(',
+    '    mix(dot(hash2(i),f),dot(hash2(i+vec2(1,0)),f-vec2(1,0)),u.x),',
+    '    mix(dot(hash2(i+vec2(0,1)),f-vec2(0,1)),dot(hash2(i+vec2(1,1)),f-vec2(1,1)),u.x),',
+    '    u.y);',
+    '}',
+
+    'float fbm(vec2 p){',
+    '  float v=0.0,a=0.5;',
+    '  mat2 m=mat2(1.6,1.2,-1.2,1.6);',
+    '  for(int i=0;i<5;i++){v+=a*noise(p);p=m*p;a*=0.5;}',
+    '  return v;',
+    '}',
+
+    'void main(){',
+    '  vec2 uv=gl_FragCoord.xy/u_res;',
+    '  uv.x*=u_res.x/u_res.y;',
+    '  float t=u_time*0.055;',
+    '  vec2 q=vec2(fbm(uv+t*0.18),fbm(uv+vec2(5.2,1.3)+t*0.14));',
+    '  vec2 r=vec2(fbm(uv+q+vec2(1.7,9.2)+0.08*t),',
+    '              fbm(uv+q+vec2(8.3,2.8)+0.10*t));',
+    '  float f=fbm(uv+r);',
+    '  vec3 c=vec3(0.018,0.068,0.095);',
+    '  c=mix(c,vec3(0.038,0.155,0.200),clamp(f*2.6,0.0,1.0));',
+    '  c=mix(c,vec3(0.025,0.105,0.148),clamp(length(q)*0.45,0.0,1.0));',
+    '  c=mix(c,vec3(0.008,0.038,0.058),clamp(length(r)*0.3,0.0,1.0));',
+    '  c*=0.60;',
+    '  gl_FragColor=vec4(c,1.0);',
+    '}'
+  ].join('\n');
+
+  function compile(type, src) {
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+
+  var prog = gl.createProgram();
+  gl.attachShader(prog, compile(gl.VERTEX_SHADER, VS));
+  gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FS));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  // Full-screen quad
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER,
+    new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  var loc = gl.getAttribLocation(prog, 'a_pos');
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+  var uTime = gl.getUniformLocation(prog, 'u_time');
+  var uRes  = gl.getUniformLocation(prog, 'u_res');
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  var start = performance.now();
+  var last  = 0;
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (now - last < 16) return;   // cap ~60fps
+    last = now;
+    gl.uniform1f(uTime, (now - start) * 0.001);
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+  requestAnimationFrame(frame);
+})();
 </script>
 
 </body>
