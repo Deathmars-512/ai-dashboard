@@ -155,7 +155,7 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
 <div style="position:fixed;top:80px;left:300px;width:256px;height:256px;border-radius:50%;background:rgba(139,43,226,0.04);filter:blur(100px);pointer-events:none;z-index:0"></div>
 
 <!-- ── SIDEBAR ── -->
-<aside class="scr" style="position:fixed;left:0;top:0;height:100vh;width:256px;display:flex;flex-direction:column;padding:28px 18px;z-index:50;background:rgba(5,20,36,0.45);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-right:1px solid rgba(116,245,255,0.12)">
+<aside class="scr" style="position:fixed;left:0;top:0;height:100vh;width:256px;display:flex;flex-direction:column;padding:28px 18px;z-index:50;background:rgba(5,20,36,0.18);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-right:1px solid rgba(116,245,255,0.12)">
 
   <!-- Brand -->
   <div style="margin-bottom:18px">
@@ -198,7 +198,7 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
 </aside>
 
 <!-- ── TOP HEADER ── -->
-<header style="position:fixed;top:0;left:256px;right:0;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;z-index:40;background:rgba(5,20,36,0.5);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(116,245,255,0.1)">
+<header style="position:fixed;top:0;left:256px;right:0;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;z-index:40;background:rgba(5,20,36,0.2);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-bottom:1px solid rgba(116,245,255,0.1)">
   <div style="display:flex;align-items:center;gap:10px">
     <span class="pulse-pip" style="width:8px;height:8px;border-radius:50%;background:#74f5ff;box-shadow:0 0 8px #00dbe7;display:inline-block;flex-shrink:0"></span>
     <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#74f5ff">LIVE FEED</span>
