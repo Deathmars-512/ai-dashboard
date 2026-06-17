@@ -148,7 +148,7 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
 <body>
 
 <!-- WebGL Shader Background -->
-<canvas id="bg-shader" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none"></canvas>
+<canvas id="bg-shader" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none"></canvas>
 
 <!-- Ambient glow orbs -->
 <div style="position:fixed;bottom:0;right:0;width:384px;height:384px;border-radius:50%;background:rgba(0,242,255,0.04);filter:blur(120px);pointer-events:none;z-index:0"></div>
@@ -206,7 +206,7 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
 </header>
 
 <!-- ── MAIN ── -->
-<main style="margin-left:256px;padding-top:52px;min-height:100vh">
+<main style="margin-left:256px;padding-top:52px;min-height:100vh;position:relative;z-index:1">
   <div style="max-width:900px;margin:0 auto;padding:28px 36px 80px">
     __DATE_GROUPS__
     <div id="emptyMsg" class="hidden" style="text-align:center;padding:80px 0">
@@ -301,11 +301,11 @@ function toggleSummary(btn) {
     '  vec2 r=vec2(fbm(uv+q+vec2(1.7,9.2)+0.08*t),',
     '              fbm(uv+q+vec2(8.3,2.8)+0.10*t));',
     '  float f=fbm(uv+r);',
-    '  vec3 c=vec3(0.018,0.068,0.095);',
-    '  c=mix(c,vec3(0.038,0.155,0.200),clamp(f*2.6,0.0,1.0));',
-    '  c=mix(c,vec3(0.025,0.105,0.148),clamp(length(q)*0.45,0.0,1.0));',
-    '  c=mix(c,vec3(0.008,0.038,0.058),clamp(length(r)*0.3,0.0,1.0));',
-    '  c*=0.60;',
+    '  vec3 c=vec3(0.02,0.09,0.13);',
+    '  c=mix(c,vec3(0.06,0.28,0.38),clamp(f*2.8,0.0,1.0));',
+    '  c=mix(c,vec3(0.04,0.18,0.26),clamp(length(q)*0.55,0.0,1.0));',
+    '  c=mix(c,vec3(0.01,0.05,0.08),clamp(length(r)*0.35,0.0,1.0));',
+    '  c*=0.88;',
     '  gl_FragColor=vec4(c,1.0);',
     '}'
   ].join('\n');
