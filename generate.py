@@ -265,7 +265,7 @@ function toggleSummary(btn) {
   var VS = [
     'attribute vec2 a_pos;',
     'void main(){gl_Position=vec4(a_pos,0.0,1.0);}'
-  ].join('\n');
+  ].join('\\n');
 
   var FS = [
     'precision mediump float;',
@@ -308,7 +308,7 @@ function toggleSummary(btn) {
     '  c*=0.9;',
     '  gl_FragColor=vec4(c,1.0);',
     '}'
-  ].join('\n');
+  ].join('\\n');
 
   function compile(type, src) {
     var s = gl.createShader(type);

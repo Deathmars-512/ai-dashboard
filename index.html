@@ -149,7 +149,7 @@
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center">
       <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#849495">UPDATED</span>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#74f5ff">2026/06/17 22:34</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#74f5ff">2026/06/17 22:38</span>
     </div>
   </div>
 
@@ -6430,8 +6430,7 @@ function toggleSummary(btn) {
   var VS = [
     'attribute vec2 a_pos;',
     'void main(){gl_Position=vec4(a_pos,0.0,1.0);}'
-  ].join('
-');
+  ].join('\n');
 
   var FS = [
     'precision mediump float;',
@@ -6474,8 +6473,7 @@ function toggleSummary(btn) {
     '  c*=0.9;',
     '  gl_FragColor=vec4(c,1.0);',
     '}'
-  ].join('
-');
+  ].join('\n');
 
   function compile(type, src) {
     var s = gl.createShader(type);
