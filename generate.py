@@ -197,7 +197,6 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
     <span class="pulse-pip" style="width:8px;height:8px;border-radius:50%;background:#74f5ff;box-shadow:0 0 8px #00dbe7;display:inline-block;flex-shrink:0"></span>
     <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#74f5ff">LIVE FEED</span>
   </div>
-  <span style="font-size:11px;color:#6b7a8a">本站摘要整理自各公開文章，版權歸原作者所有。非商業用途。</span>
 </header>
 
 <!-- ── MAIN ── -->
