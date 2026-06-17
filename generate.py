@@ -29,9 +29,12 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    background-color: #051424; /* WebGL 不支援時的 fallback */
+  }
   body {
-    background-color: #051424;
+    background-color: transparent; /* 讓 WebGL canvas 透出來 */
     color: #d4e4fa;
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;

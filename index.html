@@ -7,9 +7,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    background-color: #051424; /* WebGL 不支援時的 fallback */
+  }
   body {
-    background-color: #051424;
+    background-color: transparent; /* 讓 WebGL canvas 透出來 */
     color: #d4e4fa;
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
@@ -146,7 +149,7 @@
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center">
       <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#849495">UPDATED</span>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#74f5ff">2026/06/17 22:23</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#74f5ff">2026/06/17 22:26</span>
     </div>
   </div>
 
