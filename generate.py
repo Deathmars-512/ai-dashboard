@@ -301,11 +301,11 @@ function toggleSummary(btn) {
     '  vec2 r=vec2(fbm(uv+q+vec2(1.7,9.2)+0.08*t),',
     '              fbm(uv+q+vec2(8.3,2.8)+0.10*t));',
     '  float f=fbm(uv+r);',
-    '  vec3 c=vec3(0.02,0.09,0.13);',
-    '  c=mix(c,vec3(0.06,0.28,0.38),clamp(f*2.8,0.0,1.0));',
-    '  c=mix(c,vec3(0.04,0.18,0.26),clamp(length(q)*0.55,0.0,1.0));',
-    '  c=mix(c,vec3(0.01,0.05,0.08),clamp(length(r)*0.35,0.0,1.0));',
-    '  c*=0.88;',
+    '  vec3 c=vec3(0.02,0.07,0.12);',
+    '  c=mix(c,vec3(0.0,0.45,0.55),clamp(f*3.0,0.0,1.0));',
+    '  c=mix(c,vec3(0.02,0.25,0.35),clamp(length(q)*0.6,0.0,1.0));',
+    '  c=mix(c,vec3(0.0,0.08,0.15),clamp(length(r)*0.4,0.0,1.0));',
+    '  c*=0.9;',
     '  gl_FragColor=vec4(c,1.0);',
     '}'
   ].join('\n');
@@ -314,13 +314,26 @@ function toggleSummary(btn) {
     var s = gl.createShader(type);
     gl.shaderSource(s, src);
     gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+      console.error('[WebGL] shader compile error:', gl.getShaderInfoLog(s));
+      gl.deleteShader(s);
+      return null;
+    }
     return s;
   }
 
+  var vs = compile(gl.VERTEX_SHADER, VS);
+  var fs = compile(gl.FRAGMENT_SHADER, FS);
+  if (!vs || !fs) return;
+
   var prog = gl.createProgram();
-  gl.attachShader(prog, compile(gl.VERTEX_SHADER, VS));
-  gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FS));
+  gl.attachShader(prog, vs);
+  gl.attachShader(prog, fs);
   gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+    console.error('[WebGL] link error:', gl.getProgramInfoLog(prog));
+    return;
+  }
   gl.useProgram(prog);
 
   // Full-screen quad
