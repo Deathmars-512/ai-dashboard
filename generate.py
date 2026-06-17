@@ -26,7 +26,6 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI 每日摘要</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -70,8 +69,10 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
     overflow: hidden;
-    white-space: normal;
+    /* 不加 white-space:normal，保留 pre-line 讓展開後段落換行正常 */
   }
+  /* Utility */
+  .hidden { display: none; }
   /* Sidebar filter buttons */
   .filter-btn {
     width: 100%;
@@ -169,7 +170,7 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
   </div>
 
   <!-- Filter nav -->
-  <nav class="scr" style="flex:1;overflow-y:auto;margin:0 -4px;padding:0 4px">
+  <nav class="scr" style="flex:1;min-height:0;overflow-y:auto;margin:0 -4px;padding:0 4px">
     <div style="display:flex;flex-direction:column;gap:2px">
       <button class="filter-btn on" data-mode="all" onclick="applyFilter(this,'all','')">
         <span>ALL ARTICLES</span>
