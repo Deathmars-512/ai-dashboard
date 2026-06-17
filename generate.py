@@ -154,7 +154,7 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
   <!-- Brand -->
   <div style="margin-bottom:18px">
     <h1 style="font-family:'Geist',sans-serif;font-weight:900;font-size:18px;letter-spacing:-0.02em;color:#74f5ff;line-height:1.2">AI 每日摘要</h1>
-    <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#849495;margin-top:4px">NEURAL DIGEST ACTIVE</p>
+    <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#849495;margin-top:4px">LOCAL AI · DAILY DIGEST</p>
   </div>
 
   <!-- Stats panel -->
